@@ -88,7 +88,7 @@ class MainFragment : BrowseSupportFragment() {
     }
 
     private fun loadRows() {
-        val list = MovieList.list
+        val list = PersonList.list
 
         val rowsAdapter = ArrayObjectAdapter(ListRowPresenter())
         val cardPresenter = CardPresenter()
@@ -101,7 +101,7 @@ class MainFragment : BrowseSupportFragment() {
             for (j in 0 until NUM_COLS) {
                 listRowAdapter.add(list[j % 5])
             }
-            val header = HeaderItem(i.toLong(), MovieList.MOVIE_CATEGORY[i])
+            val header = HeaderItem(i.toLong(), PersonList.PERSON_CATEGORY[i])
             rowsAdapter.add(ListRow(header, listRowAdapter))
         }
 
@@ -135,10 +135,10 @@ class MainFragment : BrowseSupportFragment() {
             row: Row
         ) {
 
-            if (item is Movie) {
+            if (item is Person) {
                 Log.d(TAG, "Item: " + item.toString())
                 val intent = Intent(context!!, DetailsActivity::class.java)
-                intent.putExtra(DetailsActivity.MOVIE, item)
+                intent.putExtra(DetailsActivity.PERSON, item)
 
                 val bundle = ActivityOptionsCompat.makeSceneTransitionAnimation(
                     activity!!,
@@ -163,7 +163,7 @@ class MainFragment : BrowseSupportFragment() {
             itemViewHolder: Presenter.ViewHolder?, item: Any?,
             rowViewHolder: RowPresenter.ViewHolder, row: Row
         ) {
-            if (item is Movie) {
+            if (item is Person) {
                 mBackgroundUri = item.backgroundImageUrl
                 startBackgroundTimer()
             }
@@ -227,7 +227,7 @@ class MainFragment : BrowseSupportFragment() {
         private val BACKGROUND_UPDATE_DELAY = 300
         private val GRID_ITEM_WIDTH = 200
         private val GRID_ITEM_HEIGHT = 200
-        private val NUM_ROWS = 6
+        private val NUM_ROWS = 3
         private val NUM_COLS = 15
     }
 }

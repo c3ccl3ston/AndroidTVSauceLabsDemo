@@ -39,7 +39,7 @@ import java.util.Collections
  */
 class VideoDetailsFragment : DetailsSupportFragment() {
 
-    private var mSelectedMovie: Movie? = null
+    private var mSelectedMovie: Person? = null
 
     private lateinit var mDetailsBackground: DetailsSupportFragmentBackgroundController
     private lateinit var mPresenterSelector: ClassPresenterSelector
@@ -51,7 +51,7 @@ class VideoDetailsFragment : DetailsSupportFragment() {
 
         mDetailsBackground = DetailsSupportFragmentBackgroundController(this)
 
-        mSelectedMovie = activity!!.intent.getSerializableExtra(DetailsActivity.MOVIE) as Movie
+        mSelectedMovie = activity!!.intent.getSerializableExtra(DetailsActivity.PERSON) as Person
         if (mSelectedMovie != null) {
             mPresenterSelector = ClassPresenterSelector()
             mAdapter = ArrayObjectAdapter(mPresenterSelector)
@@ -67,13 +67,13 @@ class VideoDetailsFragment : DetailsSupportFragment() {
         }
     }
 
-    private fun initializeBackground(movie: Movie?) {
+    private fun initializeBackground(person: Person?) {
         mDetailsBackground.enableParallax()
         Glide.with(context!!)
             .asBitmap()
             .centerCrop()
             .error(R.drawable.default_background)
-            .load(movie?.backgroundImageUrl)
+            .load(person?.backgroundImageUrl)
             .into<SimpleTarget<Bitmap>>(object : SimpleTarget<Bitmap>() {
                 override fun onResourceReady(
                     bitmap: Bitmap,
@@ -151,7 +151,7 @@ class VideoDetailsFragment : DetailsSupportFragment() {
         detailsPresenter.onActionClickedListener = OnActionClickedListener { action ->
             if (action.id == ACTION_WATCH_TRAILER) {
                 val intent = Intent(context!!, PlaybackActivity::class.java)
-                intent.putExtra(DetailsActivity.MOVIE, mSelectedMovie)
+                intent.putExtra(DetailsActivity.PERSON, mSelectedMovie)
                 startActivity(intent)
             } else {
                 Toast.makeText(context!!, action.toString(), Toast.LENGTH_SHORT).show()

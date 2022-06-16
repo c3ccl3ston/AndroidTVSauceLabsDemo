@@ -3,7 +3,7 @@ package com.example.saucelabsdemo
 import java.io.Serializable
 
 /**
- * Movie class represents video entity with title, description, image thumbs and video url.
+ * Person class represents video entity with title, description, image thumbs and video url.
  */
 data class Person(
     var id: Long = 0,
@@ -16,7 +16,7 @@ data class Person(
 ) : Serializable {
 
     override fun toString(): String {
-        return "Movie{" +
+        return "Person{" +
                 "id=" + id +
                 ", title='" + title + '\'' +
                 ", videoUrl='" + videoUrl + '\'' +

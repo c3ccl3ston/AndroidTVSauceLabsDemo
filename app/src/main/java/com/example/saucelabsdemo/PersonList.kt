@@ -57,7 +57,7 @@ object PersonList {
         )
 
         val list = title.indices.map {
-            buildMovieInfo(
+            buildPersonInfo(
                 title[it],
                 description,
                 studio[it],
@@ -70,7 +70,7 @@ object PersonList {
         return list
     }
 
-    private fun buildMovieInfo(
+    private fun buildPersonInfo(
         title: String,
         description: String,
         studio: String,

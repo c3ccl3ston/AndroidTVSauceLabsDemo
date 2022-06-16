@@ -39,7 +39,7 @@ import java.util.Collections
  */
 class VideoDetailsFragment : DetailsSupportFragment() {
 
-    private var mSelectedMovie: Person? = null
+    private var mSelectedPerson: Person? = null
 
     private lateinit var mDetailsBackground: DetailsSupportFragmentBackgroundController
     private lateinit var mPresenterSelector: ClassPresenterSelector
@@ -51,15 +51,15 @@ class VideoDetailsFragment : DetailsSupportFragment() {
 
         mDetailsBackground = DetailsSupportFragmentBackgroundController(this)
 
-        mSelectedMovie = activity!!.intent.getSerializableExtra(DetailsActivity.PERSON) as Person
-        if (mSelectedMovie != null) {
+        mSelectedPerson = activity!!.intent.getSerializableExtra(DetailsActivity.PERSON) as Person
+        if (mSelectedPerson != null) {
             mPresenterSelector = ClassPresenterSelector()
             mAdapter = ArrayObjectAdapter(mPresenterSelector)
             setupDetailsOverviewRow()
             setupDetailsOverviewRowPresenter()
-            setupRelatedMovieListRow()
+            setupRelatedPersonListRow()
             adapter = mAdapter
-            initializeBackground(mSelectedMovie)
+            initializeBackground(mSelectedPerson)
             onItemViewClickedListener = ItemViewClickedListener()
         } else {
             val intent = Intent(context!!, MainActivity::class.java)
@@ -86,13 +86,13 @@ class VideoDetailsFragment : DetailsSupportFragment() {
     }
 
     private fun setupDetailsOverviewRow() {
-        Log.d(TAG, "doInBackground: " + mSelectedMovie?.toString())
-        val row = DetailsOverviewRow(mSelectedMovie)
+        Log.d(TAG, "doInBackground: " + mSelectedPerson?.toString())
+        val row = DetailsOverviewRow(mSelectedPerson)
         row.imageDrawable = ContextCompat.getDrawable(context!!, R.drawable.default_background)
         val width = convertDpToPixel(context!!, DETAIL_THUMB_WIDTH)
         val height = convertDpToPixel(context!!, DETAIL_THUMB_HEIGHT)
         Glide.with(context!!)
-            .load(mSelectedMovie?.cardImageUrl)
+            .load(mSelectedPerson?.cardImageUrl)
             .centerCrop()
             .error(R.drawable.default_background)
             .into<SimpleTarget<Drawable>>(object : SimpleTarget<Drawable>(width, height) {
@@ -151,7 +151,7 @@ class VideoDetailsFragment : DetailsSupportFragment() {
         detailsPresenter.onActionClickedListener = OnActionClickedListener { action ->
             if (action.id == ACTION_WATCH_TRAILER) {
                 val intent = Intent(context!!, PlaybackActivity::class.java)
-                intent.putExtra(DetailsActivity.PERSON, mSelectedMovie)
+                intent.putExtra(DetailsActivity.PERSON, mSelectedPerson)
                 startActivity(intent)
             } else {
                 Toast.makeText(context!!, action.toString(), Toast.LENGTH_SHORT).show()
@@ -160,9 +160,9 @@ class VideoDetailsFragment : DetailsSupportFragment() {
         mPresenterSelector.addClassPresenter(DetailsOverviewRow::class.java, detailsPresenter)
     }
 
-    private fun setupRelatedMovieListRow() {
-        val subcategories = arrayOf(getString(R.string.related_movies))
-        val list = MovieList.list
+    private fun setupRelatedPersonListRow() {
+        val subcategories = arrayOf(getString(R.string.related_people))
+        val list = PersonList.list
 
         Collections.shuffle(list)
         val listRowAdapter = ArrayObjectAdapter(CardPresenter())
@@ -187,10 +187,10 @@ class VideoDetailsFragment : DetailsSupportFragment() {
             rowViewHolder: RowPresenter.ViewHolder,
             row: Row
         ) {
-            if (item is Movie) {
+            if (item is Person) {
                 Log.d(TAG, "Item: " + item.toString())
                 val intent = Intent(context!!, DetailsActivity::class.java)
-                intent.putExtra(resources.getString(R.string.movie), mSelectedMovie)
+                intent.putExtra(resources.getString(R.string.movie), mSelectedPerson)
 
                 val bundle =
                     ActivityOptionsCompat.makeSceneTransitionAnimation(

@@ -36,7 +36,7 @@ import com.bumptech.glide.request.target.SimpleTarget
 import com.bumptech.glide.request.transition.Transition
 
 /**
- * Loads a grid of cards with movies to browse.
+ * Loads a grid of cards with people to browse.
  */
 class MainFragment : BrowseSupportFragment() {
 
